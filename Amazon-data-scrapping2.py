@@ -19,7 +19,7 @@ def findout(product):
             link.append(i.get_attribute('href'))
             browser.implicitly_wait(15)
         browser.find_element(By.CLASS_NAME,'s-pagination-item.s-pagination-next.s-pagination-button.s-pagination-separator').click()
-        browser.close()
+    browser.close()
     return link
 
 
