@@ -13,7 +13,7 @@ print(r.content)
 
 # beautifying the html codes
 soup = BeautifulSoup(r.content, 'html5lib')
-print(soup.prettify())
+
 
 # scrapping the name of the product
 name = soup.find('h1',attrs = {'id':'title'})
