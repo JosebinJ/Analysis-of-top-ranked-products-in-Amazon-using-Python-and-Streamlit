@@ -23,28 +23,22 @@ for product in range(3):
     browser.find_element(By.CLASS_NAME, 's-pagination-item.s-pagination-next.s-pagination-button.s-pagination-separator').click()
     browser.implicitly_wait(15)
     
-
-    
-    
-
-    
 product_name = []
 product_price = []
 product_rating = []
 number_of_ratings= []
     
 
-
-for i in range(3):
+for i in range (len(links)):
     pr = browser.get(links[i])
     name = browser.find_element(By.XPATH,'//span[@class="a-size-large product-title-word-break"]')
     prname = name.text
     
     rating = browser.find_element(By.XPATH,'//span[@class="a-size-base a-nowrap"]')
-    pr_rating = rating.text.split()[0]
+    pr_rating = float(rating.text.split()[0])
     
     numrating = browser.find_element(By.XPATH,'//span[@id="acrCustomerReviewText"]')
-    pr_numrating = numrating.text.split()[0]
+    pr_numrating = float(numrating.text.split()[0].replace(',',''))
     
 
     price = browser.find_element(By.XPATH,'//span[@class="a-price aok-align-center reinventPricePriceToPayMargin priceToPay"]')
@@ -63,9 +57,10 @@ for i in range(3):
     
     time.sleep(2)
 
-
-    
 df = pd.DataFrame({'Product Name': product_name, 'Price': product_price, 'Rating': product_rating ,'Number of Ratings': number_of_ratings})
 
+df.drop_duplicates(subset=None, keep='first', inplace=True)
+df
+
+
 print(df)
-   
