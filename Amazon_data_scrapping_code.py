@@ -39,10 +39,6 @@ for i in range (len(links)):
     
     numrating = browser.find_element(By.XPATH,'//span[@id="acrCustomerReviewText"]')
     pr_numrating = float(numrating.text.split()[0].replace(',',''))
-    
-
-    price = browser.find_element(By.XPATH,'//span[@class="a-price aok-align-center reinventPricePriceToPayMargin priceToPay"]')
-    
     try:
         price = browser.find_element(By.XPATH,'//span[@class="a-price aok-align-center reinventPricePriceToPayMargin priceToPay"]')
         new_price = float(price.text.strip('₹').replace(',',''))
