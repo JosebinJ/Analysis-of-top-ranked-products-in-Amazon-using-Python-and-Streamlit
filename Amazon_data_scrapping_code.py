@@ -95,3 +95,16 @@ def details_of_product(link_of_product):
     time.sleep(2)
     browser.close()
     return product_details
+
+name_of_product = input('State the product:')
+links_of_product = find_links(name_of_product)
+print(links_of_product)
+list_of_details = []
+for link in links_of_product:
+    details = details_of_product(link)
+    prdt_df = pd.DataFrame(details, index=[0])
+    list_of_details.append(prdt_df)
+    
+prdt_table = pd.concat(list_of_details, ignore_index=True)
+prdt_table = prdt_table.reset_index(drop=True)
+print(prdt_table)
