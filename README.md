@@ -1,1 +1,1 @@
-# Analysis of top ranked products in Amazon for a given keyword using Python and Streamlit
+# Analysis of Top Ranked Products in Amazon for a Given Keyword Using Python and Streamlit
