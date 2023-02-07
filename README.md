@@ -5,7 +5,8 @@
     use of Python, Selenium, and Streamlit for scrapping, analyzing and presenting the results in a user- 
     friendly interface.
 ## Prerequisites
-    The following softwares and packages are required for executing this project. These should be installed       as per the requirements.
+    The following softwares and packages are required for executing this project. These should be installed
+    as per the requirements.
     * Python 3
     * Selenium
     * Pandas
