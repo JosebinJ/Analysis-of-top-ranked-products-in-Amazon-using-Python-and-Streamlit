@@ -7,7 +7,7 @@
 ## Prerequisites
     The following softwares and packages are required for executing this project. These should be installed
     as per the requirements.
-    * Python 3
+    * Python 3 and above
     * Selenium
     * Pandas
     * Streamlit
