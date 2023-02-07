@@ -107,4 +107,4 @@ for link in links_of_product:
     
 prdt_table = pd.concat(list_of_details, ignore_index=True)
 prdt_table = prdt_table.reset_index(drop=True)
-print(prdt_table)
+
