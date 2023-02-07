@@ -66,7 +66,7 @@ def details_of_product(link_of_product):
     except:
         prdt_numerating = 'N.A'
     
-    #product_details['No.of ratings'] = prdt_numerating
+    #product_details['No.of ratings'] = prdt_numrating
     
     try:
         price = browser.find_element(By.XPATH,'//span[@class="a-price aok-align-center reinventPricePriceToPayMargin priceToPay"]')
