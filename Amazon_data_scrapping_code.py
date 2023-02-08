@@ -96,7 +96,9 @@ def details_of_product(link_of_product):
     browser.close()
     return product_details
 
+# Prompt the user to enter the name of the product
 name_of_product = input('State the product:')
+# Find the links for the product using the find_links function
 links_of_product = find_links(name_of_product)
 print(links_of_product)
 list_of_details = []
