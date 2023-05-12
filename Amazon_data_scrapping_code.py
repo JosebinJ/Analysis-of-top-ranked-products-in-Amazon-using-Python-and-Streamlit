@@ -96,17 +96,76 @@ def details_of_product(link_of_product):
     browser.close()
     return product_details
 
-# Prompt the user to enter the name of the product
-name_of_product = input('State the product:')
-# Find the links for the product using the find_links function
-links_of_product = find_links(name_of_product)
-print(links_of_product)
-list_of_details = []
-for link in links_of_product:
-    details = details_of_product(link)
-    prdt_df = pd.DataFrame(details, index=[0])
-    list_of_details.append(prdt_df)
-    
-prdt_table = pd.concat(list_of_details, ignore_index=True)
-prdt_table = prdt_table.reset_index(drop=True)
+import streamlit as st
 
+# Create a function to display the data table
+def show_data():
+    # Prompt the user to enter the name of the product
+    name_of_product = st.text_input('Enter the name of the product:')
+    if not name_of_product:
+        return
+    # Find the links for the product using the find_links function
+    links_of_product = find_links(name_of_product)
+    if not links_of_product:
+        st.write(f"No products found for '{name_of_product}'")
+        return
+    # Scrape the details of the product using the details_of_product function
+    list_of_details = []
+    for link in links_of_product:
+        details = details_of_product(link)
+        prdt_df = pd.DataFrame(details, index=[0])
+        list_of_details.append(prdt_df)
+
+    prdt_table = pd.concat(list_of_details, ignore_index=True)
+    prdt_table = prdt_table.reset_index(drop=True)
+    prdt_table.fillna('N.A',inplace=True)
+    #prdt_table.drop(['Manufacturer','Packer','Importer'], axis=1)
+    prdt_table['Best Sellers Rank'] = prdt_table['Best Sellers Rank'].str.replace('#','').replace('\n',' ')
+    #prdt_table['Customer Reviews'].replace('N.A', 0, inplace=True)
+    # Display the data table
+    st.write(prdt_table)
+    return prdt_table
+
+# Set page title
+st.set_page_config(page_title='Analysis of Top ranked products in Amazon')
+
+# Set page header
+st.title('Amazon Product Scraper')
+
+# Show the data table
+pic=show_data()
+print(pic)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Define functions for visualizations
+
+def show_top_rated_products(pic):
+    top_rated = pic.sort_values('Customer Reviews', ascending=False).head(5)
+    fig, ax = plt.subplots()
+    sns.barplot(x='Name', y='Rating', data=top_rated, ax=ax)
+    ax.set_ylabel('Rating')
+    ax.set_xlabel('Product Name')
+    ax.set_title('Top 5 Rated Products')
+    st.pyplot(fig)
+def show_num_of_ratings_products(pic):
+    #top_rated = pic.sort_values('Customer Reviews', ascending=False).head(5)
+    fig, ax = plt.subplots()
+    sns.barplot(x='ASIN', y='No.of ratings', data=pic, ax=ax)
+    ax.set_ylabel('Rating')
+    ax.set_xlabel('Product Name')
+    ax.set_title('Number of Ratings v/s ASIN')
+    st.pyplot(fig)
+def histogram(pic):
+   # plot histogram using Seaborn
+    sns.histplot(data=pic, x='No.of ratings', bins=25, edgecolor="darkblue")
+    plt.xlabel('Number of ratings')
+    plt.ylabel('Count')
+    st.pyplot()
+    
+# Add visualizations
+st.subheader('Visualizations')
+show_top_rated_products(pic)
+show_num_of_ratings_products(pic)
+histogram(pic)
